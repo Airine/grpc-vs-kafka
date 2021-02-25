@@ -2,36 +2,42 @@ package kafka;
 
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.producer.Callback;
-import org.apache.kafka.clients.producer.Producer;
-import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.clients.producer.RecordMetadata;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.clients.producer.*;
+import org.apache.kafka.common.protocol.types.Field;
+import org.slf4j.Logger;
 import server.TestClient;
 
 import java.time.Duration;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class KafkaClient implements TestClient {
+import static kafka.ConsumerCreator.createStringConsumer;
+import static kafka.ProducerCreator.createStringProducer;
 
-    Producer<Long, Integer> producer = new ProducerCreator<Integer>().createProducer();
+public class KafkaClient implements TestClient {
+    KafkaProducer<String, String> producer = createStringProducer();
 
     private String request(int i, String inputTopic, String outputTopic) {
-        ProducerRecord<Long, Integer> data = new ProducerRecord<>(inputTopic, i);
+
+        ProducerRecord<String, String> data = new ProducerRecord<>(inputTopic, Integer.toString(i));
         producer.send(data, new TestCallback());
         producer.flush();
-        Consumer<Long, String> consumer = new ConsumerCreator<String>().createConsumer(outputTopic);
-//        ConsumerRecords<Long, String> records = consumer.poll(Duration.ofSeconds(1));
-        AtomicInteger flag = new AtomicInteger(100);
+        KafkaConsumer<String, String> consumer = createStringConsumer(outputTopic);
+        AtomicInteger flag = new AtomicInteger(1000);
         while(flag.getAndDecrement()>0) {
-            final ConsumerRecords<Long, String> records = consumer.poll(Duration.ofSeconds(1));
+            final ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(10));
+
             if (records.count() == 0) {
                 continue;
             }
+
             String value = records.iterator().next().value();
             consumer.commitAsync();
             consumer.close();
-            return value;
+            return String.valueOf(value);
         }
+        System.out.println("Time's up!");
+        consumer.close();
         return "None";
     }
 

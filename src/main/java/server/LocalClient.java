@@ -7,8 +7,8 @@ public class LocalClient implements TestClient {
     ArrayList<Integer> twos;
 
     public LocalClient() {
-        ones = new ArrayList<Integer>();
-        twos = new ArrayList<Integer>();
+        ones = new ArrayList<>();
+        twos = new ArrayList<>();
     }
 
     public String requestOne(int i) {

@@ -3,11 +3,13 @@ import server.LocalClient;
 import server.TestClient;
 
 public class Client {
-    static int N = 1000000;
+    static int N = 10000;
     public static void main(String[] args) {
         TestClient client =
-                new KafkaClient();
-//                new LocalClient();
+                new LocalClient();
+                // new KafkaClient();
+                // new GrpcClient();
+
 
         long start, end, avg = 0;
         start = System.currentTimeMillis();
