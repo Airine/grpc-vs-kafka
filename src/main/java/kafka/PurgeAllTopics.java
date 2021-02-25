@@ -3,6 +3,8 @@ package kafka;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 
+import java.time.Duration;
+
 import static kafka.ConsumerCreator.createStringConsumer;
 
 public class PurgeAllTopics {
@@ -19,10 +21,10 @@ public class PurgeAllTopics {
             System.out.println("Purging the topic: " + topic);
             KafkaConsumer<String, String> tmpConsumer = createStringConsumer(topic);
             ConsumerRecords<String, String> consumerRecords =
-                    tmpConsumer.poll(5);
+                    tmpConsumer.poll(Duration.ofMillis(5));
             while(consumerRecords.count()>0){
                 counts += consumerRecords.count();
-                consumerRecords = tmpConsumer.poll(5);
+                consumerRecords = tmpConsumer.poll(Duration.ofMillis(5));
             } // Purge the messages one by one!!
             System.out.println(String.format("Topic %s has been purged with %d remained messages.", topic, counts));
             tmpConsumer.close();

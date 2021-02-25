@@ -1,0 +1,19 @@
+syntax = "proto3";
+package grpc;
+
+option java_package = "grpc";
+option java_multiple_files = true;
+option java_outer_classname = "TestServerProto";
+
+service TestServer {
+  rpc RequestOne (Request) returns (Reply) {}
+  rpc RequestTwo (Request) returns (Reply) {}
+}
+
+message Request {
+  int32 i = 1;
+}
+
+message Reply {
+  string message = 1;
+}

@@ -29,9 +29,9 @@ public class KafkaServer {
 
         int noMessageFound = 0;
 
-        while (noMessageFound < 10000) {
-            ConsumerRecords<String, String> consumerRecordsOne = consumerOne.poll(Duration.ofMillis(10));
-            ConsumerRecords<String, String> consumerRecordsTwo = consumerTwo.poll(Duration.ofMillis(10));
+        while (noMessageFound < 2000) {
+            ConsumerRecords<String, String> consumerRecordsOne = consumerOne.poll(Duration.ofMillis(5));
+            ConsumerRecords<String, String> consumerRecordsTwo = consumerTwo.poll(Duration.ofMillis(5));
             // 1000 is the time in milliseconds consumer will wait if no record is found at broker.
             if (consumerRecordsOne.count() == 0 && consumerRecordsTwo.count() == 0) {
                 noMessageFound++;

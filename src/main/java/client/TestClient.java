@@ -1,4 +1,4 @@
-package server;
+package client;
 
 public interface TestClient {
     String requestOne(int i);

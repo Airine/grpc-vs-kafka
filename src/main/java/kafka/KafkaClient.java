@@ -1,12 +1,9 @@
 package kafka;
 
-import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.*;
-import org.apache.kafka.common.protocol.types.Field;
-import org.slf4j.Logger;
-import server.TestClient;
+import client.TestClient;
 
 import java.time.Duration;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -25,7 +22,7 @@ public class KafkaClient implements TestClient {
         KafkaConsumer<String, String> consumer = createStringConsumer(outputTopic);
         AtomicInteger flag = new AtomicInteger(1000);
         while(flag.getAndDecrement()>0) {
-            final ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(10));
+            final ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(5));
 
             if (records.count() == 0) {
                 continue;

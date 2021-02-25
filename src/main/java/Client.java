@@ -1,15 +1,21 @@
+import client.LocalClient;
+import grpc.GrpcClient;
 import kafka.KafkaClient;
-import server.LocalClient;
-import server.TestClient;
+import client.TestClient;
+import rmi.RmiClient;
 
 public class Client {
     static int N = 10000;
     public static void main(String[] args) {
         TestClient client =
-                new LocalClient();
-                // new KafkaClient();
-                // new GrpcClient();
+//                new LocalClient();
+//                new KafkaClient();
+//                new GrpcClient();
+                new RmiClient();
 
+        if (client instanceof KafkaClient) {
+            N = 10;
+        }
 
         long start, end, avg = 0;
         start = System.currentTimeMillis();
@@ -24,5 +30,8 @@ public class Client {
         avg += end - start;
         System.out.println("Total runtime = " + avg + " ms");
         System.out.println("Average latency = " + (double)avg/(double)N + " ms");
+        if (client instanceof GrpcClient) {
+            ((GrpcClient) client).shutDown();
+        }
     }
 }
