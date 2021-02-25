@@ -38,10 +38,10 @@ public static void main(String[] args){
 
 _Remeber to adjust the `static int N` into a smaller value like 100 or 10._
 
-1. Run [`src/main/java/kafka/PurgeAllTopics.java`](src/main/kafka/PurgeAllTopics.java) first to purge the data in these 
+1. Run [`src/main/java/kafka/PurgeAllTopics.java`](src/main/java/kafka/PurgeAllTopics.java) first to purge the data in these 
 topics if there is any.
    
-2. Run [`src/main/java/kafka/KafkaServer.java`](src/main/kafka/KafkaServer.java)
+2. Run [`src/main/java/kafka/KafkaServer.java`](src/main/java/kafka/KafkaServer.java)
 
 3. run [`src/main/java/Client.java`](src/main/java/Client.java)
 
