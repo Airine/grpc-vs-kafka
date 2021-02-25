@@ -25,7 +25,7 @@ Average latency = 0.004 ms
 
 ### Kafka Client
 
-Ensure that the LocalClient is not commented out, while the other two are.
+Ensure that the KafkaClient is not commented out, while the other two are.
 ```java
 public static void main(String[] args){
     TestClient client =
@@ -35,6 +35,8 @@ public static void main(String[] args){
     // ...
 }
 ```
+
+_Remeber to adjust the `static int N` into a smaller value like 100 or 10._
 
 1. Run [`src/main/java/kafka/PurgeAllTopics.java`](src/main/kafka/PurgeAllTopics.java) first to purge the data in these 
 topics if there is any.
